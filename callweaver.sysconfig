@@ -1,0 +1,5 @@
+# callweaver startup configuration file
+
+# Try to define nice-level for running asterisk
+SERVICE_RUN_NICE_LEVEL="+5"
+
