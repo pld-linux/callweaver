@@ -34,10 +34,7 @@ else
 	exit 0
 fi
 
-RETVAL=0
-# See how we were called.
-case "$1" in
-  start)
+start() {
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/callweaver ]; then
 		msg_starting callweaver
@@ -47,8 +44,9 @@ case "$1" in
 	else
 		msg_already_running callweaver
 	fi
-	;;
-  stop)
+}
+
+stop() {
 	# Stop daemons.
 	if [ -f /var/lock/subsys/callweaver ]; then
 		msg_stopping callweaver
@@ -57,11 +55,20 @@ case "$1" in
 	else
 		msg_not_running callweaver
 	fi
+}
+
+RETVAL=0
+# See how we were called.
+case "$1" in
+  start)
+  	start
+	;;
+  stop)
+  	stop
 	;;
   restart|force-reload)
-	$0 stop
-	$0 start
-	exit $?
+	stop
+	start
 	;;
   reload)
 	if [ -f /var/lock/subsys/callweaver ]; then
