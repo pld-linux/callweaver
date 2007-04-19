@@ -107,6 +107,7 @@ fi
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS BUGS CREDITS ChangeLog HARDWARE InstallGuide.txt README SECURITY sounds.txt
+%doc doc
 %dir /etc/openpbx.org
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/openpbx.org/*.*
 %attr(755,root,root) %{_bindir}/*
