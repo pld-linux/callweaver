@@ -38,7 +38,7 @@ start() {
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/callweaver ]; then
 		msg_starting callweaver
-		daemon $SERVICE_RUN_NICE_LEVEL callweaver $callweaver_OPTS
+		daemon callweaver $callweaver_OPTS
 		RETVAL=$?
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/callweaver
 	else
