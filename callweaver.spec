@@ -6,6 +6,7 @@
 #
 %define	_rc	rc3
 Summary:	PBX in software
+Summary(pl.UTF-8):	Programowy PBX
 Name:		callweaver
 Version:	1.2
 Release:	0.1
@@ -42,13 +43,22 @@ Open Source PBX and telephony toolkit. It is, in a sense, middleware
 between Internet and telephony channels on the bottom, and Internet
 and telephony applications at the top.
 
+%description -l pl.UTF-8
+PBX i zestaw narzędziowy do telefonii o otwartych źródłach. Jest to
+middleware między kanałami internetowymy i telefonicznymi z dołu a
+aplikacjami internetowymi i telefonicznymi z góry.
+
 %package devel
-Summary:        Header files and develpment documentation for callweaver
+Summary:        Header files for callweaver
+Summary(pl.UTF-8):	Pliki nagłówkowe callweavera
 Group:          Development/Libraries
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
 %description devel
-Header files and develpment documentation for callweaver.
+Header files for callweaver.
+
+%description devel -l pl.UTF-8
+Pliki nagłówkowe callweavera.
 
 %prep
 %setup -q -n openpbx.org-%{version}_%{_rc}
@@ -82,7 +92,6 @@ Header files and develpment documentation for callweaver.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig}
 
 %{__make} -j1 install \
