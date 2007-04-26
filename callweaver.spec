@@ -16,6 +16,7 @@ Source0:	http://devs.callweaver.org/trunk_snapshots/%{name}-%{version}.%{snap}.t
 # Source0-md5:	d27ff0129fb8b6058aa310e70dfd0410
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
+Source3:	%{name}.logrotate
 URL:		http://www.callweaver.org/
 BuildRequires:	bluez-libs-devel
 BuildRequires:	curl-devel
@@ -97,20 +98,21 @@ sed -i -e 's#^>EOF#EOF#' configure*
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig}
+install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig,logrotate.d}
 
 %{__make} -j1 install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
+install %{SOURCE3} $RPM_BUILD_ROOT/etc/logrotate.d/%{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %pre
 %groupadd -g 192 %{name}
-%useradd -u 192 -d /usr/share/empty -s /bin/false -c "callweaver" -g %{name} %{name}
+%useradd -u 192 -d /var/lib/callweaver -s /bin/false -c "callweaver" -g %{name} %{name}
 
 %post
 /sbin/chkconfig --add %{name}
@@ -145,8 +147,15 @@ fi
 %{_libdir}/%{name}/modules/*.la
 %{_datadir}/%{name}
 
+%attr(750,root,callweaver) %dir %{_var}/lib/callweaver
+%attr(750,callweaver,root) %dir %{_var}/log/callweaver
+%attr(750,callweaver,root) %dir %{_var}/log/callweaver/*
+%attr(750,callweaver,root) %dir %{_var}/run/callweaver
+%attr(750,callweaver,root) %dir %{_var}/spool/callweaver
+
 %attr(754,root,root) /etc/rc.d/init.d/%{name}
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/%{name}
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/logrotate.d/%{name}
 
 %files devel
 %defattr(644,root,root,755)
