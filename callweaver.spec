@@ -4,17 +4,16 @@
 %bcond_with	misdn
 %bcond_with	javascript
 #
-%define	_rc	rc3
+%define	snap	20070426
 Summary:	PBX in software
 Summary(pl.UTF-8):	Programowy PBX
 Name:		callweaver
-Version:	1.2
-Release:	0.1
+Version:	1.1.99
+Release:	0.%{snap}.1
 License:	GPL
 Group:		Applications
-# pending name change; for now use old-name tarballs
-Source0:	http://www.openpbx.org/releases/openpbx.org-%{version}_%{_rc}.tar.gz
-# Source0-md5:	e270c40626dfa2131cc39dd1352b46f9
+Source0:	http://devs.callweaver.org/trunk_snapshots/%{name}-%{version}.%{snap}.tar.gz
+# Source0-md5:	d27ff0129fb8b6058aa310e70dfd0410
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 URL:		http://www.callweaver.org/
@@ -26,10 +25,13 @@ BuildRequires:	libvorbis-devel
 BuildRequires:	loudmouth-devel
 %{?with_misdn:BuildRequires:	mISDN-devel}
 BuildRequires:	mysql-devel
+BuildRequires:	ncurses-devel
+BuildRequires:	opendbx-devel
 BuildRequires:	popt-devel
 BuildRequires:	postgresql-devel
+BuildRequires:	readline-devel
 BuildRequires:	rpmbuild(macros) >= 1.268
-BuildRequires:	spandsp-devel >= 1:0.0.3
+BuildRequires:	spandsp-devel >= 1:0.0.4
 BuildRequires:	speex-devel
 BuildRequires:	sqlite3-devel
 BuildRequires:	unixODBC-devel
@@ -49,10 +51,10 @@ middleware między kanałami internetowymy i telefonicznymi z dołu a
 aplikacjami internetowymi i telefonicznymi z góry.
 
 %package devel
-Summary:        Header files for callweaver
+Summary:	Header files for callweaver
 Summary(pl.UTF-8):	Pliki nagłówkowe callweavera
-Group:          Development/Libraries
-Requires:       %{name} = %{version}-%{release}
+Group:		Development/Libraries
+Requires:	%{name} = %{version}-%{release}
 
 %description devel
 Header files for callweaver.
@@ -61,7 +63,10 @@ Header files for callweaver.
 Pliki nagłówkowe callweavera.
 
 %prep
-%setup -q -n openpbx.org-%{version}_%{_rc}
+%setup -q -n %{name}-%{version}.%{snap}
+
+# temporary fix
+sed -i -e 's#^>EOF#EOF#' configure*
 
 %build
 %configure \
@@ -103,9 +108,14 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%pre
+%groupadd -g 192 %{name}
+%useradd -u 192 -d /usr/share/empty -s /bin/false -c "callweaver" -g %{name} %{name}
+
 %post
 /sbin/chkconfig --add %{name}
 %service %{name} restart
+
 
 %preun
 if [ "$1" = "0" ]; then
@@ -113,23 +123,31 @@ if [ "$1" = "0" ]; then
 	/sbin/chkconfig --del %{name}
 fi
 
+%postun
+if [ "$1" = "0" ]; then
+        %userremove callweaver
+	%groupremove %{name}
+fi
+
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS BUGS CREDITS ChangeLog HARDWARE InstallGuide.txt README SECURITY sounds.txt
 %doc doc
-%dir /etc/openpbx.org
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/openpbx.org/*.*
+%dir %{_sysconfdir}/%{name}
+%attr(640,root,callweaver) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/*.*
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_sbindir}/*
-%dir %{_libdir}/openpbx.org
-%attr(755,root,root) %{_libdir}/openpbx.org/*.so.*
-%{_libdir}/openpbx.org/*.la
-%dir %{_libdir}/openpbx.org/modules
-%attr(755,root,root) %{_libdir}/openpbx.org/modules/*.so
-%{_libdir}/openpbx.org/modules/*.la
-%{_datadir}/openpbx.org
-%{_mandir}/man*/*
+%dir %{_libdir}/%{name}
+%attr(755,root,root) %{_libdir}/%{name}/*.so.*
+%{_libdir}/%{name}/*.la
+%dir %{_libdir}/%{name}/modules
+%attr(755,root,root) %{_libdir}/%{name}/modules/*.so
+%{_libdir}/%{name}/modules/*.la
+%{_datadir}/%{name}
+
+%attr(754,root,root) /etc/rc.d/init.d/%{name}
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/%{name}
 
 %files devel
 %defattr(644,root,root,755)
-%{_includedir}/openpbx
+%{_includedir}/%{name}
