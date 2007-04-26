@@ -1,5 +1,14 @@
 # callweaver startup configuration file
 
-# Try to define nice-level for running asterisk
-SERVICE_RUN_NICE_LEVEL="+5"
+# Try to define nice-level for running callweaver
+SERVICE_RUN_NICE_LEVEL="0"
 
+# yes causes callweaver to be run through safe script which will restart
+# callweaver on crash
+# CALLWEAVER_SAFE=yes
+
+# realtime operation
+CALLWEAVER_REALTIME=yes
+
+# additional options
+# CALLWEAVER_OPT=

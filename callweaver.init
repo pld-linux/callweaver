@@ -68,10 +68,10 @@ stop() {
 	# Stop daemons.
 	if [ -f /var/lock/subsys/callweaver ]; then
 		msg_stopping callweaver
-		daemon $REALDAEMON -rx 'stop now' > /dev/null
+		daemon $REALDAEMON -rx 'stop now'
 		sleep 2
 		# make sure it's dead
-		killproc callweaver > /dev/null 2>&1
+		killproc callweaver -KILL > /dev/null 2>&1
 		rm -f /var/lock/subsys/callweaver >/dev/null 2>&1
 	else
 		msg_not_running callweaver
