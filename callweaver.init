@@ -108,6 +108,9 @@ case "$1" in
 		exit 1
 	fi
 	;;
+  logger-reload)
+  	$DAEMON -rx 'logger reload'
+	;;
   status)
 	status callweaver
 	exit $?
