@@ -144,7 +144,7 @@ fi
 %{_libdir}/%{name}/modules/*.la
 %{_datadir}/%{name}
 
-%attr(750,root,callweaver) %dir %{_var}/lib/callweaver
+%attr(750,callweaver,root) %dir %{_var}/lib/callweaver
 %attr(750,callweaver,root) %dir %{_var}/log/callweaver
 %attr(750,callweaver,root) %dir %{_var}/log/callweaver/*
 %attr(750,callweaver,root) %dir %{_var}/run/callweaver
