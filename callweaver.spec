@@ -1,6 +1,3 @@
-# TODO:
-# - user/group
-# - fix init scripts
 %bcond_with	misdn
 %bcond_with	javascript
 #
