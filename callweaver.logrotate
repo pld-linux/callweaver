@@ -1,0 +1,11 @@
+/var/log/callweaver/* /var/log/callweaver/*/* {
+        daily
+        missingok
+	compress
+	delaycompress
+        rotate 30
+        sharedscripts
+        postrotate
+                /sbin/service callweaver logger-reload
+        endscript
+}
