@@ -21,6 +21,11 @@
 # Get network config
 . /etc/sysconfig/network
 
+
+CALLWEAVER_REALTIME=yes
+CALLWEAVER_SAFE=no
+
+
 # Get service config
 [ -f /etc/sysconfig/callweaver ] && . /etc/sysconfig/callweaver
 
@@ -34,11 +39,24 @@ else
 	exit 0
 fi
 
+REALDAEMON=/usr/sbin/callweaver
+if is_yes "$CALLWEAVER_SAFE"; then
+	DAEMON=/usr/sbin/safe_callweaver
+else
+	DAEMON=/usr/sbin/callweaver
+fi
+
+if ! is_yes "$CALLWEAVER_REALTIME"; then
+	CALLWEAVER_OPT="$CALLWEAVER_OPT -p"
+fi
+
+RETVAL=0
+# See how we were called.
 start() {
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/callweaver ]; then
 		msg_starting callweaver
-		daemon callweaver $CALLWEAVER_OPTS
+		daemon $DAEMON -U callweaver -G callweaver $CALLWEAVER_OPT
 		RETVAL=$?
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/callweaver
 	else
@@ -50,7 +68,10 @@ stop() {
 	# Stop daemons.
 	if [ -f /var/lock/subsys/callweaver ]; then
 		msg_stopping callweaver
-		killproc callweaver
+		daemon $REALDAEMON -rx 'stop now' > /dev/null
+		sleep 2
+		# make sure it's dead
+		killproc callweaver > /dev/null 2>&1
 		rm -f /var/lock/subsys/callweaver >/dev/null 2>&1
 	else
 		msg_not_running callweaver
@@ -72,9 +93,13 @@ case "$1" in
 	;;
   reload)
 	if [ -f /var/lock/subsys/callweaver ]; then
-		msg_reloading callweaver
-		busy
-		callweaver -rx reload > /dev/null 2>&1
+		msg_reloading "callweaver configuration"
+		daemon $DAEMON -rx 'reload'
+		# these AFAIK are also reloaded by -rx reload
+		# msg_reloading "callweaver logger"
+		# daemon $DAEMON -rx 'logger reload'
+		# msg_reloading "callweaver extensions"
+		# daemon $DAEMON -rx 'extensions reload'
 		RETVAL=$?
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/callweaver
 		ok
