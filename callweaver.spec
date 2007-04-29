@@ -1,7 +1,7 @@
 %bcond_with	misdn
 %bcond_with	javascript
 #
-%define	snap	20070426
+%define	snap	20070429
 Summary:	PBX in software
 Summary(pl.UTF-8):	Programowy PBX
 Name:		callweaver
@@ -10,7 +10,7 @@ Release:	0.%{snap}.1
 License:	GPL
 Group:		Applications
 Source0:	http://devs.callweaver.org/trunk_snapshots/%{name}-%{version}.%{snap}.tar.gz
-# Source0-md5:	d27ff0129fb8b6058aa310e70dfd0410
+# Source0-md5:	a784a2f698ddea42a6a3b1be4683af57
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}.logrotate
@@ -63,9 +63,6 @@ Pliki nagłówkowe callweavera.
 %prep
 %setup -q -n %{name}-%{version}.%{snap}
 
-# temporary fix
-sed -i -e 's#^>EOF#EOF#' configure*
-
 %build
 %configure \
 	%{?with_misdn:--with-chan_misdn} \
@@ -91,18 +88,21 @@ sed -i -e 's#^>EOF#EOF#' configure*
 	--with-res_sqlite \
 	--with-directory-layout=lsb
 
-%{__make} -j1
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig,logrotate.d}
 
-%{__make} -j1 install \
+%{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/logrotate.d/%{name}
+
+install -d $RPM_BUILD_ROOT%{_mandir}/man8
+mv $RPM_BUILD_ROOT%{_mandir}/*.8 $RPM_BUILD_ROOT%{_mandir}/man8
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -143,6 +143,7 @@ fi
 %attr(755,root,root) %{_libdir}/%{name}/modules/*.so
 %{_libdir}/%{name}/modules/*.la
 %{_datadir}/%{name}
+%{_mandir}/man*/*
 
 %attr(750,callweaver,root) %dir %{_var}/lib/callweaver
 %attr(750,callweaver,root) %dir %{_var}/log/callweaver
