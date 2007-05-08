@@ -1,7 +1,7 @@
 %bcond_with	misdn
 %bcond_with	javascript
 #
-%define	snap	20070429
+%define	snap	20070508
 Summary:	PBX in software
 Summary(pl.UTF-8):	Programowy PBX
 Name:		callweaver
@@ -10,7 +10,7 @@ Release:	0.%{snap}.1
 License:	GPL
 Group:		Applications
 Source0:	http://devs.callweaver.org/trunk_snapshots/%{name}-%{version}.%{snap}.tar.gz
-# Source0-md5:	a784a2f698ddea42a6a3b1be4683af57
+# Source0-md5:	c784e7511e77d363b4282a6913f345c4
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}.logrotate
@@ -100,9 +100,6 @@ install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig,logrotate.d}
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/logrotate.d/%{name}
-
-install -d $RPM_BUILD_ROOT%{_mandir}/man8
-mv $RPM_BUILD_ROOT%{_mandir}/*.8 $RPM_BUILD_ROOT%{_mandir}/man8
 
 %clean
 rm -rf $RPM_BUILD_ROOT
