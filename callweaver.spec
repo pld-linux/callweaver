@@ -1,16 +1,16 @@
 %bcond_with	misdn
 %bcond_with	javascript
 #
-%define	snap	20070508
+%define	snap	rc4
 Summary:	PBX in software
 Summary(pl.UTF-8):	Programowy PBX
 Name:		callweaver
-Version:	1.1.99
+Version:	1.2.0
 Release:	0.%{snap}.1
-License:	GPL
+License:	GPL v2+
 Group:		Applications
-Source0:	http://devs.callweaver.org/trunk_snapshots/%{name}-%{version}.%{snap}.tar.gz
-# Source0-md5:	c784e7511e77d363b4282a6913f345c4
+Source0:	http://devs.callweaver.org/release/%{name}-%{version}_%{snap}.tgz
+# Source0-md5:	8865477a2c9e9e09a51c9ea669f0244e
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}.logrotate
@@ -25,15 +25,16 @@ BuildRequires:	loudmouth-devel
 BuildRequires:	mysql-devel
 BuildRequires:	ncurses-devel
 BuildRequires:	opendbx-devel
+BuildRequires:	pkgconfig
 BuildRequires:	popt-devel
 BuildRequires:	postgresql-devel
 BuildRequires:	readline-devel
 BuildRequires:	rpmbuild(macros) >= 1.268
-BuildRequires:	spandsp-devel >= 1:0.0.4
+BuildRequires:	spandsp-devel >= 1:0.0.4-0.pre3.1
 BuildRequires:	speex-devel
 BuildRequires:	sqlite3-devel
 BuildRequires:	unixODBC-devel
-BuildRequires:	zaptel-devel
+BuildRequires:	zaptel-devel >= 1.2
 BuildRequires:	zlib-devel
 Requires(post,preun):	/sbin/chkconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -61,7 +62,7 @@ Header files for callweaver.
 Pliki nagłówkowe callweavera.
 
 %prep
-%setup -q -n %{name}-%{version}.%{snap}
+%setup -q -n %{name}-%{version}_%{snap}
 
 %build
 %configure \
