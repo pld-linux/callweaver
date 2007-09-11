@@ -1,4 +1,5 @@
 /var/log/callweaver/* /var/log/callweaver/*/* {
+	create 640 callweaver logs	
         daily
         missingok
 	compress
