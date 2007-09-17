@@ -25,7 +25,6 @@ BuildRequires:	loudmouth-devel
 %{?with_misdn:BuildRequires:	mISDN-devel}
 BuildRequires:	mysql-devel
 BuildRequires:	ncurses-devel
-BuildRequires:	opendbx-devel
 BuildRequires:	pkgconfig
 BuildRequires:	popt-devel
 BuildRequires:	postgresql-devel
