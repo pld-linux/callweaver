@@ -1,7 +1,8 @@
 %bcond_with	misdn
 %bcond_with	javascript
 #
-%define	snap	20070911
+%define	min_spandsp	1:0.0.4-0.pre8.1
+%define	snap	20070917
 Summary:	PBX in software
 Summary(pl.UTF-8):	Programowy PBX
 Name:		callweaver
@@ -9,8 +10,8 @@ Version:	1.2.0
 Release:	0.%{snap}.1
 License:	GPL v2+
 Group:		Applications
-Source0:	http://devs.callweaver.org/1.2_snapshots/callweaver-RC-1.1.99.20070911.tar.gz
-# Source0-md5:	89ea97f5935d77ae14035f17d5468c90
+Source0:	http://devs.callweaver.org/1.2_snapshots/callweaver-RC-1.1.99.%{snap}.tar.gz
+# Source0-md5:	e20e3f1df7837e3abb8e90eb2f3a8120
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}.logrotate
@@ -30,12 +31,13 @@ BuildRequires:	popt-devel
 BuildRequires:	postgresql-devel
 BuildRequires:	readline-devel
 BuildRequires:	rpmbuild(macros) >= 1.268
-BuildRequires:	spandsp-devel >= 1:0.0.4-0.pre3.1
+BuildRequires:	spandsp-devel >= %{min_spandsp}
 BuildRequires:	speex-devel
 BuildRequires:	sqlite3-devel
 BuildRequires:	unixODBC-devel
 BuildRequires:	zaptel-devel >= 1.2
 BuildRequires:	zlib-devel
+Requires:	spandsp >= %{min_spandsp}
 Requires(post,preun):	/sbin/chkconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
