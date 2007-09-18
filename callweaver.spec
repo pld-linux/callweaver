@@ -98,6 +98,7 @@ Pliki nagłówkowe callweavera.
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig,logrotate.d}
+install -d $RPM_BUILD_ROOT%{_var}/spool/callweaver/voicemail
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -152,6 +153,7 @@ fi
 %attr(750,callweaver,root) %dir %{_var}/log/callweaver/*
 %attr(750,callweaver,root) %dir %{_var}/run/callweaver
 %attr(750,callweaver,root) %dir %{_var}/spool/callweaver
+%attr(750,callweaver,root) %dir %{_var}/spool/callweaver/voicemail
 
 %attr(754,root,root) /etc/rc.d/init.d/%{name}
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/%{name}
