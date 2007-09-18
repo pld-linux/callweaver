@@ -18,7 +18,9 @@ Source3:	%{name}.logrotate
 URL:		http://www.callweaver.org/
 BuildRequires:	bluez-libs-devel
 BuildRequires:	curl-devel
+BuildRequires:	libcap-devel
 BuildRequires:	libogg-devel
+BuildRequires:	libsndfile-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	libvorbis-devel
 BuildRequires:	loudmouth-devel
