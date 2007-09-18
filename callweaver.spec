@@ -20,6 +20,7 @@ BuildRequires:	bluez-libs-devel
 BuildRequires:	curl-devel
 BuildRequires:	libcap-devel
 BuildRequires:	libogg-devel
+BuildRequires:	libpri-devel
 BuildRequires:	libsndfile-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	libvorbis-devel
