@@ -13,11 +13,6 @@ CALLWEAVER_REALTIME=yes
 # additional options
 # CALLWEAVER_OPT=
 
-# yes causes callweaver to be run through safe script which will restart
-# callweaver on crash
-# CALLWEAVER_SAFE=yes
-
-
 # when using CALLWEAVER_SAFE=yes you can also use options below:
 
 # run callweaver console on tty X (for constant monitoring etc)
