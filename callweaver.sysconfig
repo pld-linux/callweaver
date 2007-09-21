@@ -4,7 +4,7 @@
 SERVICE_RUN_NICE_LEVEL="0"
 
 # yes causes callweaver to be run through safe script which will restart
-# callweaver on crash
+# callweaver on crash and store core dumps for further inspection
 # CALLWEAVER_SAFE=yes
 
 # realtime operation
@@ -12,3 +12,21 @@ CALLWEAVER_REALTIME=yes
 
 # additional options
 # CALLWEAVER_OPT=
+
+# yes causes callweaver to be run through safe script which will restart
+# callweaver on crash
+# CALLWEAVER_SAFE=yes
+
+
+# when using CALLWEAVER_SAFE=yes you can also use options below:
+
+# run callweaver console on tty X (for constant monitoring etc)
+# CALLWEAVER_TTY=9
+
+# open console on TTY specified?
+# CALLWEAVER_CONSOLE=yes
+
+# notify someone when callweaver dies
+# CALLWEAVER_NOTIFY=root@localhost
+
+
