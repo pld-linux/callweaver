@@ -50,7 +50,7 @@ and telephony applications at the top.
 
 %description -l pl.UTF-8
 PBX i zestaw narzędziowy do telefonii o otwartych źródłach. Jest to
-middleware między kanałami internetowymy i telefonicznymi z dołu a
+middleware między kanałami internetowymi i telefonicznymi z dołu a
 aplikacjami internetowymi i telefonicznymi z góry.
 
 %package devel
