@@ -1,3 +1,4 @@
+%bcond_with	simpledebug # for safe_callweaver core dump storing
 %bcond_with	misdn
 %bcond_with	javascript
 #
@@ -64,6 +65,10 @@ Header files for callweaver.
 
 %description devel -l pl.UTF-8
 Pliki nagłówkowe callweavera.
+
+%if %{with simpledebug}
+%define	no_install_post_strip	1
+%endif
 
 %prep
 %setup -q -n %{name}-RC-1.1.99.%{snap}
