@@ -2,7 +2,7 @@
 %bcond_with	misdn
 %bcond_with	javascript
 #
-%define	min_spandsp	1:0.0.4-0.pre8.1
+%define	min_spandsp	1:0.0.4-0.pre9.1
 %define	snap	20070921
 Summary:	PBX in software
 Summary(pl.UTF-8):	Programowy PBX
