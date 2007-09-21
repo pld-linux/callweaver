@@ -2,7 +2,7 @@
 %bcond_with	javascript
 #
 %define	min_spandsp	1:0.0.4-0.pre8.1
-%define	snap	20070917
+%define	snap	20070921
 Summary:	PBX in software
 Summary(pl.UTF-8):	Programowy PBX
 Name:		callweaver
@@ -11,7 +11,7 @@ Release:	0.%{snap}.1
 License:	GPL v2+
 Group:		Applications
 Source0:	http://devs.callweaver.org/1.2_snapshots/callweaver-RC-1.1.99.%{snap}.tar.gz
-# Source0-md5:	e20e3f1df7837e3abb8e90eb2f3a8120
+# Source0-md5:	f52285ed499003f5c96b41259ba05d9c
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}.logrotate
@@ -149,6 +149,7 @@ fi
 %{_mandir}/man*/*
 
 %attr(750,callweaver,root) %dir %{_var}/lib/callweaver
+%attr(750,callweaver,root) %dir %{_var}/lib/callweaver/core
 %attr(750,callweaver,root) %dir %{_var}/log/callweaver
 %attr(750,callweaver,root) %dir %{_var}/log/callweaver/*
 %attr(750,callweaver,root) %dir %{_var}/run/callweaver
