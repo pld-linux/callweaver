@@ -1,5 +1,4 @@
 %bcond_with	simpledebug # for safe_callweaver core dump storing
-%bcond_with	misdn
 %bcond_with	javascript
 #
 %define	min_spandsp	1:0.0.4-0.pre9.1
@@ -26,7 +25,7 @@ BuildRequires:	libsndfile-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	libvorbis-devel
 BuildRequires:	loudmouth-devel
-%{?with_misdn:BuildRequires:	mISDN-devel}
+BuildRequires:	mISDNuser-devel
 BuildRequires:	mysql-devel
 BuildRequires:	ncurses-devel
 BuildRequires:	pkgconfig
@@ -75,7 +74,7 @@ Pliki nagłówkowe callweavera.
 
 %build
 %configure \
-	%{?with_misdn:--with-chan_misdn} \
+	--with-chan_misdn \
 	--with-chan_fax \
 	--with-chan_bluetooth \
 	--enable-odbc \
