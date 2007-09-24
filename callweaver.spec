@@ -16,6 +16,7 @@ Source0:	http://devs.callweaver.org/1.2_snapshots/callweaver-RC-1.1.99.%{snap}.t
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}.logrotate
+Patch0:		%{name}-fixes.patch
 URL:		http://www.callweaver.org/
 BuildRequires:	bluez-libs-devel
 BuildRequires:	curl-devel
@@ -68,11 +69,12 @@ Pliki nagłówkowe callweavera.
 
 %if %{with simpledebug}
 %define	no_install_post_strip	1
-%define	_enable_debug_packages	0
 %endif
 
 %prep
 %setup -q -n %{name}-RC-1.1.99.%{snap}
+%patch0 -p0
+
 %{?with_zhone:sed -i -e 's|.*#define.*ZHONE_HACK.*|#define ZHONE_HACK 1|g' channels/chan_zap.c}
 
 %build
