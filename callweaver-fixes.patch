@@ -1,0 +1,85 @@
+--- corelib/callweaver.c~	2007-09-21 00:45:03.000000000 +0200
++++ corelib/callweaver.c	2007-09-24 18:49:22.362273674 +0200
+@@ -2745,15 +2745,16 @@
+             free(buf);
+             buf = (char *)NULL;
+         }
+-    }
+-    /* Do nothing */
+-    for (;;)   	/* apparently needed for the MACos */
+-    {
+-        struct pollfd p =
++    } else {
++        /* Do nothing */
++        for (;;)   	/* apparently needed for the MACos */
+         {
+-            -1 /* no descriptor */, 0, 0
+-        };
+-        poll(&p, 0, -1);
++            struct pollfd p =
++            {
++                -1 /* no descriptor */, 0, 0
++            };
++            poll(&p, 0, -1);
++        }
+     }
+ 
+     if (rl_init)
+
+Index: res/res_musiconhold.c
+===================================================================
+--- res/res_musiconhold.c	(wersja 4082)
++++ res/res_musiconhold.c	(kopia robocza)
+@@ -178,7 +178,7 @@
+ 		if (state->origwfmt && opbx_set_write_format(chan, state->origwfmt)) {
+ 			opbx_log(LOG_WARNING, "Unable to restore channel '%s' to format '%d'\n", chan->name, state->origwfmt);
+ 		}
+-		state->save_pos = state->pos + 1;
++		state->save_pos = state->pos;
+ 	}
+ }
+ 
+@@ -189,23 +189,21 @@
+ 	int tries;
+ 
+ 	if (state->save_pos) {
+-		state->pos = state->save_pos - 1;
++		state->pos = state->save_pos;
+ 		state->save_pos = 0;
+-	} else {
++	}
++	state->samples = 0;
++	if (chan->stream) {
++		pbx_closestream(chan->stream);
++		chan->stream = NULL;
++		state->pos++;
++		state->pos %= state->class->total_files;
++	}
++	if (ast_test_flag(state->class, MOH_RANDOMIZE)) {
+ 		/* Try 20 times to find something good */
+-		for (tries=0;tries < 20;tries++) {
+-			state->samples = 0;
+-			if (chan->stream) {
+-				opbx_closestream(chan->stream);
+-				chan->stream = NULL;
+-				state->pos++;
+-			}
++		for (tries = 0; tries < 20; tries++) {
++			state->pos = rand() % state->class->total_files;
+ 
+-			if (opbx_test_flag(state->class, MOH_RANDOMIZE))
+-				state->pos = rand();
+-
+-			state->pos %= state->class->total_files;
+-
+ 			/* check to see if this file's format can be opened */
+ 			if (opbx_fileexists(state->class->filearray[state->pos], NULL, NULL) > 0)
+ 				break;
+@@ -213,7 +211,6 @@
+ 		}
+ 	}
+ 
+-	state->pos = state->pos % state->class->total_files;
+ /* Check it	
+ 	if (opbx_set_write_format(chan, OPBX_FORMAT_SLINEAR)) {
+ 		opbx_log(LOG_WARNING, "Unable to set '%s' to linear format (write)\n", chan->name);
