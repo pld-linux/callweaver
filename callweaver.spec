@@ -123,7 +123,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 /sbin/chkconfig --add %{name}
-#%service %{name} restart
+#%%service %%{name} restart
 
 
 %preun
