@@ -55,7 +55,7 @@ Index: res/res_musiconhold.c
 +		state->pos++;
 +		state->pos %= state->class->total_files;
 +	}
-+	if (ast_test_flag(state->class, MOH_RANDOMIZE)) {
++	if (pbx_test_flag(state->class, MOH_RANDOMIZE)) {
  		/* Try 20 times to find something good */
 -		for (tries=0;tries < 20;tries++) {
 -			state->samples = 0;
