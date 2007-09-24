@@ -68,6 +68,7 @@ Pliki nagłówkowe callweavera.
 
 %if %{with simpledebug}
 %define	no_install_post_strip	1
+%define	_enable_debug_packages	0
 %endif
 
 %prep
