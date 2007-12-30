@@ -1,6 +1,8 @@
-%bcond_with	simpledebug # for safe_callweaver core dump storing
-%bcond_with	zhone # zhone hack
-%bcond_with	javascript
+#
+# Conditional build:
+%bcond_with	simpledebug		# for safe_callweaver core dump storing
+%bcond_with	zhone			# with zhone hack
+%bcond_with	javascript		# with javascript support
 #
 %define	min_spandsp	1:0.0.4-0.pre9.1
 %define	snap	20070923
@@ -17,6 +19,7 @@ Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}.logrotate
 Patch0:		%{name}-fixes.patch
+Patch1:		%{name}-paths.patch
 URL:		http://www.callweaver.org/
 BuildRequires:	bluez-libs-devel
 BuildRequires:	curl-devel
@@ -74,6 +77,7 @@ Pliki nagłówkowe callweavera.
 %prep
 %setup -q -n %{name}-RC-1.1.99.%{snap}
 %patch0 -p0
+%patch1 -p1
 
 %{?with_zhone:sed -i -e 's|.*#define.*ZHONE_HACK.*|#define ZHONE_HACK 1|g' channels/chan_zap.c}
 
