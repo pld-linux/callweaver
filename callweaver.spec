@@ -4,22 +4,21 @@
 %bcond_with	zhone			# with zhone hack
 %bcond_with	javascript		# with javascript support
 #
-%define	min_spandsp	1:0.0.4-0.pre9.1
-%define	snap	20070923
+%define	min_spandsp	1:0.0.4-0.pre16.1
+%define	snap	20080209
 Summary:	PBX in software
 Summary(pl.UTF-8):	Programowy PBX
 Name:		callweaver
 Version:	1.2.0
-Release:	0.%{snap}.2
+Release:	0.%{snap}.1
 License:	GPL v2+
 Group:		Applications
 Source0:	http://devs.callweaver.org/1.2_snapshots/callweaver-RC-1.1.99.%{snap}.tar.gz
-# Source0-md5:	0c89a054826383f1e59c1ea49c0e7960
+# Source0-md5:	32b458754087f02de1b154043a838d09
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}.logrotate
-Patch0:		%{name}-fixes.patch
-Patch1:		%{name}-paths.patch
+Patch0:		%{name}-paths.patch
 URL:		http://www.callweaver.org/
 BuildRequires:	bluez-libs-devel
 BuildRequires:	curl-devel
@@ -76,8 +75,7 @@ Pliki nagłówkowe callweavera.
 
 %prep
 %setup -q -n %{name}-RC-1.1.99.%{snap}
-%patch0 -p0
-%patch1 -p1
+%patch0 -p1
 
 %{?with_zhone:sed -i -e 's|.*#define.*ZHONE_HACK.*|#define ZHONE_HACK 1|g' channels/chan_zap.c}
 
