@@ -4,8 +4,8 @@
 %bcond_with	zhone			# with zhone hack
 %bcond_with	javascript		# with javascript support
 #
-%define	min_spandsp	1:0.0.4-0.pre16.1
-%define	snap	20080209
+%define	min_spandsp	1:0.0.4-0.pre18.1
+%define	snap	20080404
 Summary:	PBX in software
 Summary(pl.UTF-8):	Programowy PBX
 Name:		callweaver
@@ -14,7 +14,7 @@ Release:	0.%{snap}.1
 License:	GPL v2+
 Group:		Applications
 Source0:	http://devs.callweaver.org/1.2_snapshots/callweaver-RC-1.1.99.%{snap}.tar.gz
-# Source0-md5:	32b458754087f02de1b154043a838d09
+# Source0-md5:	c9df542e72939868d1c851e6ca72ad0e
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}.logrotate
