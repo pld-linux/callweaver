@@ -10,7 +10,7 @@ Summary:	PBX in software
 Summary(pl.UTF-8):	Programowy PBX
 Name:		callweaver
 Version:	1.2.0
-Release:	0.%{snap}.1
+Release:	0.%{snap}.2
 License:	GPL v2+
 Group:		Applications
 Source0:	http://devs.callweaver.org/1.2_snapshots/callweaver-RC-1.1.99.%{snap}.tar.gz
