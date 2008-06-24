@@ -4,12 +4,12 @@
 %bcond_with	zhone			# with zhone hack
 %bcond_with	javascript		# with javascript support
 #
-%define	min_spandsp	1:0.0.5-0.pre3.1
+%define	min_spandsp	1:0.0.5-0.pre4.1
 Summary:	PBX in software
 Summary(pl.UTF-8):	Programowy PBX
 Name:		callweaver
 Version:	1.2.0.1
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Applications
 Source0:	http://devs.callweaver.org/release/callweaver-%{version}.tar.bz2
@@ -18,6 +18,7 @@ Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}.logrotate
 Patch0:		%{name}-paths.patch
+Patch1:		%{name}-spandsp.patch
 URL:		http://www.callweaver.org/
 BuildRequires:	bluez-libs-devel
 BuildRequires:	curl-devel
@@ -75,6 +76,7 @@ Pliki nagłówkowe callweavera.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %{?with_zhone:sed -i -e 's|.*#define.*ZHONE_HACK.*|#define ZHONE_HACK 1|g' channels/chan_zap.c}
 
