@@ -1,0 +1,34 @@
+--- 1.2/channels/chan_zap.c	1999-01-21 00:28:13.000000000 +0000
++++ 1.2/channels/chan_zap.c	2008-06-29 21:30:51.487605750 +0000
+@@ -95,7 +95,7 @@
+ #define TRUE (!FALSE)
+ #endif
+ 
+-#ifndef ZT_SIG_EM_E1
++#if !defined(ZT_SIG_EM_E1) || (defined(HAVE_PRI) && !defined(ZT_SIG_HARDHDLC))
+ #error "Your zaptel is too old.  please update"
+ #endif
+ 
+@@ -8888,7 +8888,7 @@
+ 			cw_log(LOG_ERROR, "Unable to get parameters for D-channel %d (%s)\n", x, strerror(errno));
+ 			return -1;
+ 		}
+-		if (p.sigtype != ZT_SIG_HDLCFCS) {
++		if ((p.sigtype != ZT_SIG_HDLCFCS) && (p.sigtype != ZT_SIG_HARDHDLC)) {
+ 			zt_close(pri->fds[i]);
+ 			pri->fds[i] = -1;
+ 			cw_log(LOG_ERROR, "D-channel %d is not in HDLC/FCS mode.  See /etc/zaptel.conf\n", x);
+--- callweaver-1.2.0.1/corelib/dsp.c.org	2008-06-24 21:01:07.696898500 +0000
++++ callweaver-1.2.0.1/corelib/dsp.c	2008-06-24 21:02:33.118237000 +0000
+@@ -898,9 +898,9 @@
+                                     NULL);
+     }
+     if ((digitmode & DSP_DIGITMODE_RELAXDTMF))
+-        dtmf_rx_parms(&dsp->dtmf_rx, FALSE, 8, 8);
++        dtmf_rx_parms(&dsp->dtmf_rx, FALSE, 8, 8, -99);
+     else
+-        dtmf_rx_parms(&dsp->dtmf_rx, FALSE, 8, 4);
++        dtmf_rx_parms(&dsp->dtmf_rx, FALSE, 8, 4, -99);
+     dsp->digitmode = digitmode;
+     return 0;
+ }
