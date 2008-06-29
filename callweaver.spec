@@ -9,7 +9,7 @@ Summary:	PBX in software
 Summary(pl.UTF-8):	Programowy PBX
 Name:		callweaver
 Version:	1.2.0.1
-Release:	2
+Release:	3
 License:	GPL v2+
 Group:		Applications
 Source0:	http://devs.callweaver.org/release/callweaver-%{version}.tar.bz2
@@ -18,7 +18,7 @@ Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}.logrotate
 Patch0:		%{name}-paths.patch
-Patch1:		%{name}-spandsp.patch
+Patch1:		%{name}-upstream.patch
 URL:		http://www.callweaver.org/
 BuildRequires:	bluez-libs-devel
 BuildRequires:	curl-devel
