@@ -4,21 +4,19 @@
 %bcond_with	zhone			# with zhone hack
 %bcond_with	javascript		# with javascript support
 #
-%define	min_spandsp	1:0.0.5-0.pre4.1
+%define	min_spandsp	1:0.0.6-0.pre12
 Summary:	PBX in software
 Summary(pl.UTF-8):	Programowy PBX
 Name:		callweaver
-Version:	1.2.0.1
-Release:	6
+Version:	1.2.1
+Release:	1
 License:	GPL v2+
 Group:		Applications
 Source0:	http://devs.callweaver.org/release/callweaver-%{version}.tar.bz2
-# Source0-md5:	624b2f0d81f91c235adf587061b634b6
+# Source0-md5:	54c2ba5852cbe43b802b4605584b5754
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}.logrotate
-Patch0:		%{name}-paths.patch
-Patch1:		%{name}-upstream.patch
 URL:		http://www.callweaver.org/
 BuildRequires:	bluez-libs-devel
 BuildRequires:	curl-devel
@@ -75,8 +73,6 @@ Pliki nagłówkowe callweavera.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
 
 %{?with_zhone:sed -i -e 's|.*#define.*ZHONE_HACK.*|#define ZHONE_HACK 1|g' channels/chan_zap.c}
 
@@ -149,7 +145,6 @@ fi
 %doc doc
 %dir %{_sysconfdir}/%{name}
 %attr(640,root,callweaver) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/*.*
-%attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_sbindir}/*
 %dir %{_libdir}/%{name}
 %attr(755,root,root) %{_libdir}/%{name}/*.so.*
