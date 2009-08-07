@@ -9,7 +9,7 @@ Summary:	PBX in software
 Summary(pl.UTF-8):	Programowy PBX
 Name:		callweaver
 Version:	1.2.1
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Applications
 Source0:	http://devs.callweaver.org/release/callweaver-%{version}.tar.bz2
@@ -20,6 +20,7 @@ Source3:	%{name}.logrotate
 URL:		http://www.callweaver.org/
 BuildRequires:	bluez-libs-devel
 BuildRequires:	curl-devel
+BuildRequires:	dahdi-linux-devel
 BuildRequires:	libcap-devel
 BuildRequires:	libogg-devel
 BuildRequires:	libpri-devel
@@ -39,7 +40,6 @@ BuildRequires:	spandsp-devel >= %{min_spandsp}
 BuildRequires:	speex-devel
 BuildRequires:	sqlite3-devel
 BuildRequires:	unixODBC-devel
-BuildRequires:	zaptel-devel >= 1.2
 BuildRequires:	zlib-devel
 Requires:	spandsp >= %{min_spandsp}
 Requires(post,preun):	/sbin/chkconfig
