@@ -12,7 +12,7 @@ Version:	1.2.1
 Release:	3
 License:	GPL v2+
 Group:		Applications
-Source0:	http://devs.callweaver.org/release/callweaver-%{version}.tar.bz2
+Source0:	http://devs.callweaver.org/release/%{name}-%{version}.tar.bz2
 # Source0-md5:	54c2ba5852cbe43b802b4605584b5754
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
@@ -41,9 +41,11 @@ BuildRequires:	speex-devel
 BuildRequires:	sqlite3-devel
 BuildRequires:	unixODBC-devel
 BuildRequires:	zlib-devel
-Requires:	spandsp >= %{min_spandsp}
 Requires(post,preun):	/sbin/chkconfig
+Requires:	spandsp >= %{min_spandsp}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%undefine	__cxx
 
 %description
 Open Source PBX and telephony toolkit. It is, in a sense, middleware
