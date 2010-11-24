@@ -9,7 +9,7 @@ Summary:	PBX in software
 Summary(pl.UTF-8):	Programowy PBX
 Name:		callweaver
 Version:	1.2.1
-Release:	5
+Release:	6
 License:	GPL v2+
 Group:		Applications
 Source0:	http://devs.callweaver.org/release/%{name}-%{version}.tar.bz2
@@ -46,6 +46,7 @@ Requires:	spandsp >= %{min_spandsp}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %undefine	__cxx
+%define		skip_post_check_so	libcwjb.so.0.0.0
 
 %description
 Open Source PBX and telephony toolkit. It is, in a sense, middleware
