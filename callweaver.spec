@@ -1,15 +1,22 @@
+# TODO
+# callweaver.x86_64: E: arch-dependent-file-in-usr-share /usr/share/callweaver/ogi/eogi-test
+# callweaver.x86_64: E: arch-dependent-file-in-usr-share /usr/share/callweaver/ogi/eogi-sphinx-test
+# callweaver.i486: E: arch-dependent-file-in-usr-share /usr/share/callweaver/ogi/eogi-test
+# callweaver.i486: E: arch-dependent-file-in-usr-share /usr/share/callweaver/ogi/eogi-sphinx-test
+# callweaver.i686: E: arch-dependent-file-in-usr-share /usr/share/callweaver/ogi/eogi-test
+# callweaver.i686: E: arch-dependent-file-in-usr-share /usr/share/callweaver/ogi/eogi-sphinx-test
 #
 # Conditional build:
 %bcond_with	simpledebug		# for safe_callweaver core dump storing
 %bcond_with	zhone			# with zhone hack
 %bcond_with	javascript		# with javascript support
-#
+
 %define	min_spandsp	1:0.0.6-0.pre12
 Summary:	PBX in software
 Summary(pl.UTF-8):	Programowy PBX
 Name:		callweaver
 Version:	1.2.1
-Release:	6
+Release:	6.1
 License:	GPL v2+
 Group:		Applications
 Source0:	http://devs.callweaver.org/release/%{name}-%{version}.tar.bz2
@@ -114,9 +121,9 @@ install -d $RPM_BUILD_ROOT%{_var}/spool/callweaver/voicemail
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
-install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
-install %{SOURCE3} $RPM_BUILD_ROOT/etc/logrotate.d/%{name}
+install -p %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
+cp -p %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
+cp -p %{SOURCE3} $RPM_BUILD_ROOT/etc/logrotate.d/%{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -129,7 +136,6 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --add %{name}
 #%%service %%{name} restart
 
-
 %preun
 if [ "$1" = "0" ]; then
 	%service -q %{name} stop
@@ -138,7 +144,7 @@ fi
 
 %postun
 if [ "$1" = "0" ]; then
-        %userremove callweaver
+	%userremove %{name}
 	%groupremove %{name}
 fi
 
