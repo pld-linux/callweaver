@@ -127,7 +127,7 @@ install -p %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
 cp -p %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
 cp -p %{SOURCE3} $RPM_BUILD_ROOT/etc/logrotate.d/%{name}
 
-install %{SOURCE2} $RPM_BUILD_ROOT/usr/lib/tmpfiles.d/%{name}.conf
+install %{SOURCE4} $RPM_BUILD_ROOT/usr/lib/tmpfiles.d/%{name}.conf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
