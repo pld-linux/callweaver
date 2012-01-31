@@ -24,6 +24,7 @@ Source0:	http://devs.callweaver.org/release/%{name}-%{version}.tar.bz2
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}.logrotate
+Source4:	%{name}.tmpfiles
 URL:		http://www.callweaver.org/
 BuildRequires:	bluez-libs-devel
 BuildRequires:	curl-devel
@@ -115,8 +116,9 @@ Pliki nagłówkowe callweavera.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig,logrotate.d}
-install -d $RPM_BUILD_ROOT%{_var}/spool/callweaver/voicemail
+install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig,logrotate.d} \
+	$RPM_BUILD_ROOT%{_var}/spool/callweaver/voicemail \
+	$RPM_BUILD_ROOT/usr/lib/tmpfiles.d
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -124,6 +126,8 @@ install -d $RPM_BUILD_ROOT%{_var}/spool/callweaver/voicemail
 install -p %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
 cp -p %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
 cp -p %{SOURCE3} $RPM_BUILD_ROOT/etc/logrotate.d/%{name}
+
+install %{SOURCE2} $RPM_BUILD_ROOT/usr/lib/tmpfiles.d/%{name}.conf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -163,7 +167,7 @@ fi
 %{_libdir}/%{name}/modules/*.la
 %{_datadir}/%{name}
 %{_mandir}/man*/*
-
+/usr/lib/tmpfiles.d/%{name}.conf
 %attr(750,callweaver,root) %dir %{_var}/lib/callweaver
 %attr(750,callweaver,root) %dir %{_var}/lib/callweaver/core
 %attr(750,callweaver,root) %dir %{_var}/log/callweaver
