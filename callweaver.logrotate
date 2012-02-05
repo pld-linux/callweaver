@@ -1,4 +1,5 @@
 /var/log/callweaver/* /var/log/callweaver/*/* {
+	su callweaver root
 	create 640 callweaver logs	
         daily
         missingok
